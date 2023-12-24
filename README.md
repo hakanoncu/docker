@@ -35,6 +35,7 @@ ubuntu üzerinde terminal çalıştırır.
 
 ## docker ps
 **ps**: process
+
 ps bilgisayarda çalışan processler.
 
 Terminal üzerinde:
@@ -70,12 +71,13 @@ name parametresi ile isimlendirilmiş bash_ubuntu container çalıştırmak içi
 **bash_ubuntu** isimli container **-it** parametresi ile birlikte kaydedilmişti. O yüzden bu kod aslında bizim için **ubuntu** imajını çalıştırırken  **-it** parametresi ile birlikte çalıştırmış oldu.
 
 ## docker rm
-rm: remove
-Çlaıştırılan her container fiziksel olarak diskimizde yer kaplar. ihtiyacımız olmayan containerları fiziksel olarak silmek için **container_name** veya **container_id** ile çağırılabilir.
+**rm**: remove
+
+Çalıştırılan her container fiziksel olarak diskimizde yer kaplar. ihtiyacımız olmayan containerları fiziksel olarak silmek için **container_name** veya **container_id** ile çağırılabilir.
 
     container remove bash_ubuntu
 
 tüm containerları tek seferde silmek için:
 
     docker container rm $(docker container ls -aq)
-
+**docker container ls -aq** sadece **container_id** lerini dördürür.
