@@ -12,13 +12,12 @@ burada anlatılacak
     docker pull node
     docker pull redis
     docker pull mongo
-
+imajlar locale indirilir ama çalıştırılmaz.
 
 ## docker images
 local olarak indirilmiş olan tüm image dosyalarını listeleme:
 
     docker images
-
 
 ## docker run
 İmajların çalıştırılarak container elde edilmesi:
@@ -68,5 +67,15 @@ daha önce oluşuturulmuş herhangi bir container için başlatma veya durdurma 
 name parametresi ile isimlendirilmiş bash_ubuntu container çalıştırmak için:
 
     docker start bash_ubuntu
-**bash_ubuntu** isimli container **-it** parametresi ile birlikte kaydedilmişti. O yüzden bu kod aslında bizim için **ubuntu** imajını çalıştırırken 
-bu kodu çalıştırmış oldu.
+**bash_ubuntu** isimli container **-it** parametresi ile birlikte kaydedilmişti. O yüzden bu kod aslında bizim için **ubuntu** imajını çalıştırırken  **-it** parametresi ile birlikte çalıştırmış oldu.
+
+## docker rm
+rm: remove
+Çlaıştırılan her container fiziksel olarak diskimizde yer kaplar. ihtiyacımız olmayan containerları fiziksel olarak silmek için **container_name** veya **container_id** ile çağırılabilir.
+
+    container remove bash_ubuntu
+
+tüm containerları tek seferde silmek için:
+
+    docker container rm $(docker container ls -aq)
+
