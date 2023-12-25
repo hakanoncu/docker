@@ -4,6 +4,48 @@ Docker Notlarım
 
 ## Docker Kurulumu
 burada anlatılacak
+## Podman ile Docker-Cli Taklit Etme
+1. **podman** i kurun.
+
+	    sudo pacman -S podman
+
+2.  **podman-docker** paketini kurun.
+
+	    sudo pacman -S podman-docker
+
+3.  *Emulate Docker CLI using podman. Create /etc/containers/nodocker to quiet msg.*
+uyarısını gidermek için
+
+	    sudo touch /etc/containers/nodocker
+
+	komutu ile boş bir nodocker dosyası oluşturun.
+	
+4. 	**/etc/containers/registries.conf** dosyasının en altına
+
+	    unqualified-search-registries = ["docker.io"]
+
+	    [[registry]]
+	    location = "docker.io"
+	    
+	    [registries.search]
+	    registries = ['docker.io']
+
+	eklemeleri yapın. Bunun için:
+	
+		sudo nano /etc/containers/registries.conf
+		    
+	ile dosyanın en altına inin ve eklemeleri yapıştırın. ctrl+x , e, enter diyerek kaydedin.
+
+Bu, **varsayılan docker yapılandırması**na eşdeğerdir. Artık tüm podman komutlarını docker olarak kullanabilirsiniz.
+
+    podman pull docker.io/library/redis:6
+
+yerine
+
+    docker pull redis:6
+
+gibi.
+
 
 ## docker pull
 [dockerhub](https://hub.docker.com) üzerinden ubuntu, node, redis, mongo gibi imajları indirmek için:
@@ -75,9 +117,70 @@ name parametresi ile isimlendirilmiş bash_ubuntu container çalıştırmak içi
 
 Çalıştırılan her container fiziksel olarak diskimizde yer kaplar. ihtiyacımız olmayan containerları fiziksel olarak silmek için **container_name** veya **container_id** ile çağırılabilir.
 
-    container remove bash_ubuntu
+    container rm bash_ubuntu
 
 tüm containerları tek seferde silmek için:
 
     docker container rm $(docker container ls -aq)
 **docker container ls -aq** sadece **container_id** lerini dördürür.
+
+## docker tag
+
+    docker pull redis
+    docker run redis
+
+komutları bize tag yapısı **latest** olan sürümü indirilir ve çalıştırılır. 
+Fakat 
+
+    docker run redis:6
+dersek biz dockerhub üzerinde tag değeri 6 olan redis 6.0.14 sürümünü indirmiş oluruz.
+
+    docker images
+ altında 
+
+| REPOSITORY | TAG |
+|--|--|
+| redis  | 6 |
+| redis | latest |
+
+> **Podman kullanımı için uyarı:**
+> Error: short-name "redis:6" did not resolve to an alias and no unqualified-search registries are defined in "/etc/containers/registries.conf"
+
+**podman**   veya  **podman-docker** kullanıyorsanız yukarıdaki şekilde hata verecektir. Bunu düzeltmenin 2 yolu var.
+1. yöntem
+	/etc/containers/registries.conf dosyasına
+
+	    unqualified-search-registries = ["docker.io"]
+
+	    [[registry]]
+	    location = "docker.io"
+	    
+	    [registries.search]
+	    registries = ['docker.io']
+
+	eklemeleri yapın. Bu, **varsayılan docker yapılandırması**na eşdeğerdir.
+	
+	    sudo nano /etc/containers/registries.conf
+	ile dosyanın en altına yapıştırın. ctrl+x , evet, enter diyin.
+	
+2. yöntem
+	
+	    docker run redis:6
+
+	yerine
+
+	    docker run docker.io/library/redis:6 
+
+	olarak kullanmaktır.
+	
+	Her zaman kayıt defteri sunucusu (tam dns adı), ad alanı, görüntü adı ve etiketi 
+	registry server (full dns name), namespace, image name, and tag
+	Örneğin;
+	registry.redhat.io/ubi8/ubi:latest
+	docker.io/library/redis:6  
+	gibi tam nitelikli görüntü adlarının kullanılmasını önerilir.
+
+
+## docker image tag
+Kendime ait bir tag vermek istersek
+
