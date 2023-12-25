@@ -4,7 +4,7 @@ Docker Notlarım
 
 ## Docker Kurulumu
 burada anlatılacak
-## Podman ile Docker-Cli Taklit Etme
+## Podman ile Docker-CLI Taklit Etme
 1. **podman** i kurun.
 
 	    sudo pacman -S podman
