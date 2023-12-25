@@ -23,18 +23,17 @@ uyarısını gidermek için
 4. 	**/etc/containers/registries.conf** dosyasının en altına
 
 	    unqualified-search-registries = ["docker.io"]
-
-	    [[registry]]
-	    location = "docker.io"
-	    
-	    [registries.search]
-	    registries = ['docker.io']
-
 	eklemeleri yapın. Bunun için:
 	
 		sudo nano /etc/containers/registries.conf
 		    
 	ile dosyanın en altına inin ve eklemeleri yapıştırın. ctrl+x , e, enter diyerek kaydedin.
+	
+	> [[registry]] 
+	> location = "docker.io" 
+	> [registries.search] 
+	> registries =['docker.io']
+	> bu kodlar hataya sebep oluyor. bunları eklemeyin.
 
 Bu, **varsayılan docker yapılandırması**na eşdeğerdir. Artık tüm podman komutlarını docker olarak kullanabilirsiniz.
 
@@ -44,7 +43,7 @@ yerine
 
     docker pull redis:6
 
-gibi.
+gibi kullanabilirsiniz.
 
 
 ## docker pull
