@@ -149,26 +149,20 @@ dersek biz dockerhub üzerinde tag değeri 6 olan redis 6.0.14 sürümünü indi
 1. yöntem
 	/etc/containers/registries.conf dosyasına
 
-	    unqualified-search-registries = ["docker.io"]
-
-	    [[registry]]
-	    location = "docker.io"
-	    
-	    [registries.search]
-	    registries = ['docker.io']
+	   unqualified-search-registries = ["docker.io"]
 
 	eklemeleri yapın. Bu, **varsayılan docker yapılandırması**na eşdeğerdir.
 	
-	    sudo nano /etc/containers/registries.conf
+	   sudo nano /etc/containers/registries.conf
 	ile dosyanın en altına yapıştırın. ctrl+x , evet, enter diyin.
 	
 2. yöntem
 	
-	    docker run redis:6
+	   docker run redis:6
 
 	yerine
 
-	    docker run docker.io/library/redis:6 
+	   docker run docker.io/library/redis:6 
 
 	olarak kullanmaktır.
 	
